@@ -1,0 +1,34 @@
+Konoha JsonRpc Generator
+
+[Usage]
+  ./API.idl app=ApplicationName format=OutputLanguage
+
+  E.g.
+   Create MyAppClient by JavaScript
+   $ ./API.idl app=MyAppClient format=js
+   Then, API.idl generate JsonRpc code at gen/MyappClient.gen.js
+
+   Create MyAppServer by Konoha
+   $ ./API.idl app=MyAppServer format=konoha
+
+
+[Example]
+
+  Create MyAppClient and invoke RPC.
+  $ ./API.idl app=MyappClient format=konoha
+  $ cat example/MyappClient.k
+   1 Load("../gen/MyappClient.gen.k");
+   2 
+   3 void f() {
+   4     String SEVER = "http://127.0.0.1/req.php"
+   5     MyappClient client = new MyappClient(SERVER);
+   6     NodeId Id = client.GetNodeId(1);
+   7     System.p(Id);
+   8 }
+   9 
+  10 f();
+
+  And finally execute client code.
+  $ minikonoha example/MyappClient.k
+    - (MyappClient.k:7) 100
+

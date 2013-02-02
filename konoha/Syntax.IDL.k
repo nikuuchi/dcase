@@ -344,6 +344,10 @@ void SetUpCodeGen() {
         if (arg == "format=js") {
             global.gen = new JSCodeGen();
         }
+        else if (arg == "format=konoha") {
+            global.gen = new KonohaCodeGen();
+        }
+
     }
     if (global.gen == null) {
         global.gen = new KonohaCodeGen();
