@@ -1,3 +1,5 @@
+#!/usr/bin/env minikonoha
+
 Load("Syntax.IDL.k");
 //データ定義
 

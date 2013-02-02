@@ -1,13 +1,17 @@
-
-files=API.idl
+app=Myapp
 
 .PHONY : all
-all: $(files)
+all: gen/$(app)Client.gen.k gen/$(app)Server.gen.k
 
 .PHONY : clean
 clean:
-	-rf *.gen.k
+	rm -f gen/*.gen.k
 
 API.idl: Syntax.IDL.k
-	minikonoha API.idl app=MyappClient #output=js
-	minikonoha API.idl app=MyappServer #output=js
+
+gen/$(app)Client.gen.k: API.idl
+	./API.idl app=$(app)Client
+#output=js
+
+gen/$(app)Server.gen.k: API.idl
+	./API.idl app=$(app)Server

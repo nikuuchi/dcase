@@ -200,8 +200,6 @@ void DefineSyntax() {
 
 DefineSyntax();
 
-
-
 class KonohaCodeGen extends IDLCodeGenerator {
     KonohaCodeGen() {
         ext = "k";
