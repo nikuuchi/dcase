@@ -290,6 +290,11 @@ class JSCodeGen extends IDLCodeGenerator {
         ext = "js";
     }
     void init() {
+        emit("var ${global.AppName} = (function() {");
+        emit("  function ${global.AppName}() {}");
+        emit("  ${global.AppName}.prototype = ${global.AppType};");
+        emit("  return ${global.AppName};");
+        emit("})();");
     }
     void emitMethod(String ReturnType, String MethodName, Json Param) {
         int i = 0;

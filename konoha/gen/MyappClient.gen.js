@@ -1,3 +1,8 @@
+var MyappClient = (function() {
+  function MyappClient() {}
+  MyappClient.prototype = JsonRPCClient;
+  return MyappClient;
+})();
 var Node = (function() {
   function Node() {}
   Node.ThisNodeId = undefined;
