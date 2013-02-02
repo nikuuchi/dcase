@@ -1,7 +1,7 @@
 #!/usr/bin/env minikonoha
 
 Load("Syntax.IDL.k");
-//データ定義
+// DataType
 
 alias int ArgumentId;
 alias int NodeId;
@@ -34,7 +34,7 @@ Type TopGoal extends Goal {
     attribute NodeId TopGoalNodeId;
 }
 
-//Node操作
+// proceedure
 api Node     GetRootArgument();
 api Node     GetNode(NodeId Id);
 api NodeList GetNodeTree(NodeId Id);
@@ -45,7 +45,6 @@ api NodeId   DeleteLink(NodeId ParentNodeId, Node TargetNode);
 api NodeId   NewLink(NodeId ParentNodeId, TargetNodeId);
 api NodeId   Create(NodeType Type, String Description);
 
-//検索操作
 api NodeIdList FindNodeFrom(NodeType Type, NodeId NodeIdSearchFrom);
 api NodeIdList FindNodeByDescription(String SearchText);
 api NodeIdList FindContextByProperty(String SearchText);
