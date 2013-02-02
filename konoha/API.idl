@@ -1,0 +1,49 @@
+Load("Syntax.IDL.k");
+//データ定義
+
+alias int ArgumentId;
+alias int NodeId;
+alias int NodeType;
+array NodeId NodeIdList;
+array String StringMap;
+array Object NodeList; /* FIXME */
+
+Type Node {
+    attribute NodeId ThisNodeId;
+    attribute NodeId PrevNodeId;
+    attribute NodeId NextNodeId;
+    attribute ArgumentId BelongedArgumentId;
+    attribute NodeList   Children;
+    attribute StringMap  Attributes;
+}
+
+Type Goal extends Node {};
+Type Evidence extends Node {};
+Type Stategy extends Node {};
+Type Context extends Node {};
+Type DscriptEvidence extends Evidence {
+    attribute String script;
+};
+Type DscriptContext  extends Context {
+    attribute String script;
+};
+Type TopGoal extends Goal {
+    attribute ArgumentId ThisArgumentId;
+    attribute NodeId TopGoalNodeId;
+}
+
+//Node操作
+api Node     GetRootArgument();
+api Node     GetNode(NodeId Id);
+api NodeList GetNodeTree(NodeId Id);
+api NodeId   GetNodeId(ArgumentId Id);
+api NodeId   Replace(NodeId OldNodeId, Node NewNodeTree);
+api NodeId   Add(NodeId ParentNodeId, Node ChildNodeTree);
+api NodeId   DeleteLink(NodeId ParentNodeId, Node TargetNode);
+api NodeId   NewLink(NodeId ParentNodeId, TargetNodeId);
+api NodeId   Create(NodeType Type, String Description);
+
+//検索操作
+api NodeIdList FindNodeFrom(NodeType Type, NodeId NodeIdSearchFrom);
+api NodeIdList FindNodeByDescription(String SearchText);
+api NodeIdList FindContextByProperty(String SearchText);
