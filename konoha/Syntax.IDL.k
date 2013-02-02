@@ -295,22 +295,32 @@ class JSCodeGen extends IDLCodeGenerator {
         int i = 0;
         String[] keys = Param.Keys();
         String ParamInfo = "";
-        while (i < keys.getlength()) {
+
+        if (global.AppType != "JsonRPCClient") {
+            return;
+        }
+
+        for (i=0; i < keys.getlength(); i = i + 1) {
             String k = keys[i];
             if (i != 0) {
                 ParamInfo = ParamInfo + ",";
             }
             ParamInfo = ParamInfo + Param.getString(k);
-            i = i + 1;
         }
-        emit("function ${MethodName}(${ParamInfo}) { assert(0); }");
+        emit("${global.AppName}.${MethodName} = function(${ParamInfo}) {");
+        emit("  var param    = [${ParamInfo}];");
+        emit("  var request  = createMessage(\"${MethodName}\", param);");
+        emit("  var response = emitRequest(request);");
+        emit("  return response.result;");
+        emit("}");
+
     }
     void emitType(String TypeName, String SuperType, Json TypeDecl) {
         String Extends = "";
         emit("var ${TypeName} = (function() {");
-        emit("\tfunction ${TypeName}() {}");
+        emit("  function ${TypeName}() {}");
         if (SuperType != "") {
-            emit("\t${TypeName}.prototype = ${SuperType};");
+            emit("  ${TypeName}.prototype = ${SuperType};");
         }
         int i = 0;
         String[] keys = TypeDecl.Keys();
@@ -318,11 +328,11 @@ class JSCodeGen extends IDLCodeGenerator {
         while (i < keys.getlength()) {
             String k = keys[i];
             if (!sup.hasKey(k)) {
-                emit("\t${TypeName}.${k} = undefined;");
+                emit("  ${TypeName}.${k} = undefined;");
             }
             i = i + 1;
         }
-        emit("\treturn ${TypeName};");
+        emit("  return ${TypeName};");
         emit("})();");
     }
 }

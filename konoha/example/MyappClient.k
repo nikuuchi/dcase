@@ -1,4 +1,4 @@
-Load("gen/MyappClient.gen.k");
+Load("../gen/MyappClient.gen.k");
 
 void f() {
     /* Client Side */
