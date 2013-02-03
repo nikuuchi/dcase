@@ -24,10 +24,21 @@
     } else {
         $img  = h($_SESSION['user']['twitter_profile_image_url']);
         $name = h($_SESSION['user']['twitter_screen_name']);
-        echo ('<div class="navbar-form pull-right"><img width="16" height="16" src="'.$img.'" />'.$name.' <a href="logout.php">LogOut</a></div>');
+        echo ('<div class="navbar-form pull-right">');
+        echo ('    <ul class="nav nav-pills">');
+        echo ('        <li class="dropdown">');
+        echo ('            <a class="dropdown-toggle" data-toggle="dropdown" href="#">');
+        echo ('                <img width="16" height="16" src="'.$img.'" />'.$name);
+        echo ('                <b class="caret"></b>');
+        echo ('            </a>');
+        echo ('            <ul class="dropdown-menu">');
+        echo ('                 <a href="logout.php">LogOut</a>');
+        echo ('            </ul>');
+        echo ('        </li>');
+        echo ('    </ul>');
+        echo ('</div>');
     }
 ?>
         </div>
       </div>
     </div>
-
