@@ -1,3 +1,4 @@
+<?php include_once("./utils.php"); ?>
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
