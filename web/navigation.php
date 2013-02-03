@@ -19,7 +19,7 @@
           </ul>
 <?php
     if (empty($_SESSION['user'])) {
-        echo ('<a href="redirect.php"><img src="img/sign-in-with-twitter.png" alt="Sign in with Twitter"/></a>')
+        echo ('<a href="redirect.php"><img src="assets/img/sign-in-with-twitter.png" alt="Sign in with Twitter"/></a>')
     } else {
         $img  = h($_SESSION['user']['twitter_profile_image_url']);
         $name = h($_SESSION['user']['twitter_screen_name']);
