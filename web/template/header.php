@@ -17,7 +17,7 @@ session_start();
       body { padding-top: 60px; }
       /* 60px to make the container go all the way to the bottom of the topbar */
     </style>
-    <?php if (defined(VIEWER): ?>
+    <?php if (defined(VIEWER)): ?>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/dcase-node.css"/>
