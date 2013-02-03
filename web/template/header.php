@@ -1,6 +1,6 @@
 <?php
-include_once("../config.php");
-include_once("../utils.php");
+include_once("config.php");
+include_once("utils.php");
 session_start();
 ?>
 <!DOCTYPE html>
