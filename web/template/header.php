@@ -1,6 +1,6 @@
 <?php
-include_once("./config.php");
-include_once("./utils.php");
+include_once("../config.php");
+include_once("../utils.php");
 session_start();
 ?>
 <!DOCTYPE html>
@@ -22,4 +22,5 @@ session_start();
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
-
+<body>
+<?php include_once("navigation.php"); ?>

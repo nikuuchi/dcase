@@ -1,6 +1,4 @@
-<?php include_once("./header.php"); ?>
-  <body>
-    <?php include_once("navigation.php"); ?>
+<?php include_once("template/header.php"); ?>
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
@@ -69,4 +67,4 @@
       </div>
     </div>
 
-<?php include_once("./footer.php"); ?>
+<?php include_once("./template/footer.php"); ?>
