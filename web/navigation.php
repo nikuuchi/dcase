@@ -24,7 +24,7 @@
     } else {
         $img  = h($_SESSION['user']['twitter_profile_image_url']);
         $name = h($_SESSION['user']['twitter_screen_name']);
-        echo ('<img width="16" height="16" src="$img" />$name <a href="logout.php">LogOut</a>');
+        echo ('<img width="16" height="16" src="'.$img.'" />'.$name.' <a href="logout.php">LogOut</a>');
     }
 ?>
         </div>
