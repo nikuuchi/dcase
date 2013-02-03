@@ -60,9 +60,6 @@
         </div>
       </div>
       <hr>
-      <div>
-        (c) Masahiro Ide 2012
-      </div>
     </div>
 
 <?php include_once("./footer.php"); ?>
