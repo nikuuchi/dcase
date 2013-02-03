@@ -17,12 +17,13 @@ session_start();
       body { padding-top: 60px; }
       /* 60px to make the container go all the way to the bottom of the topbar */
     </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     <?php if (defined(VIEWER)): ?>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/dcase-node.css"/>
-    <link rel="stylesheet" type="text/css" href="css/viewer.css"/>
-    <link rel="stylesheet" type="text/css" href="css/sidemenu.css"/>
+    <link rel="stylesheet" type="text/css" href="viewer/css/dcase-node.css"/>
+    <link rel="stylesheet" type="text/css" href="viewer/css/viewer.css"/>
+    <link rel="stylesheet" type="text/css" href="viewer/css/sidemenu.css"/>
     <style>
     body {
     	min-height: 480px;
@@ -35,16 +36,16 @@ session_start();
     	height: 100%;
     }
     </style>
-    <script type="text/javascript" src="lib/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="js/dcaseviewer.js" charset="utf-8"></script>
-    <script type="text/javascript" src="js/dnode.js"></script>
-    <script type="text/javascript" src="js/dnodeview.js"></script>
-    <script type="text/javascript" src="js/handler.js"></script>
-    <script type="text/javascript" src="js/edit.js"></script>
-    <script type="text/javascript" src="js/sidemenu.js"></script>
-    <script type="text/javascript" src="js/api.js"></script>
-    <script type="text/javascript" src="js/animation.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="viewer/dcaseviewer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="viewer/dnode.js"></script>
+    <script type="text/javascript" src="viewer/dnodeview.js"></script>
+    <script type="text/javascript" src="viewer/handler.js"></script>
+    <script type="text/javascript" src="viewer/edit.js"></script>
+    <script type="text/javascript" src="viewer/sidemenu.js"></script>
+    <script type="text/javascript" src="viewer/api.js"></script>
+    <script type="text/javascript" src="viewer/animation.js"></script>
     <script type="text/javascript">
     
     function getNodeFromServer(id) {
@@ -76,7 +77,6 @@ session_start();
     </script>
 
     <?php endif; ?>
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
