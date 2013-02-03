@@ -25,22 +25,72 @@ session_start();
     <link rel="stylesheet" type="text/css" href="assets/css/dark-glass/sidebar.css" />
   </head>
 <body>
+    <div class="container-fluid" id="left_menu">
+      <div class="row-fluid">
+        <div class="span3">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#">Click Me</a>
+            </li>
+            <li class="">
+              <a href="#">Click Me</a>
+            </li>
+            <li class="">
+              <a href="#">Click Me</a>
+            </li>
+          </ul>
+          <div class="well">
+            <div class="control-group">
+              <label for="selectinput1">
+                Label
+              </label>
+              <select name="selectinput1">
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="selectinput2">
+                Label
+              </label>
+              <select name="selectinput2">
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="textinput3">
+                Label
+              </label>
+              <input name="textinput3" type="">
+            </div>
+            <div class="control-group">
+              <label for="textarea1">
+                Label
+              </label>
+              <textarea name="textarea1"></textarea>
+            </div>
+            <div class="control-group">
+              <label for="fileinput1">
+                Label
+              </label>
+              <input name="fileinput1" type="file">
+            </div>
+            <a href="#">Click Me</a>
+          </div>
+        </div>
+        <div class="span9">
+          <div class="hero-unit">
+            <div id="viewer"></div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
 
-<ul id="demo_menu1" >
-    <li><a href="#" >jQuery</a></li>
-    <li><a href="#" >Write</a></li>
-    <li><a href="#" >Less</a></li>
-    <li><a href="#" >Do</a></li>
-    <li><a href="#" >More</a></li>
-</ul>
-
-  <script type="text/javascript">
-    $("ul#demo_menu1").sidebar();
-  </script>
   <script type="text/javascript" src="assets/js/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery-ui-1.8.13.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery.sidebar.js"></script>
   <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+  <script type="text/javascript">
+    $("ul#left_menu").sidebar();
+  </script>
 
   </body>
 </html>
