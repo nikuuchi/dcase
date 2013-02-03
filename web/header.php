@@ -1,4 +1,7 @@
-<?php include_once("./config.php"); ?>
+<?php
+include_once("./config.php");
+session_start();
+?>
 <!DOCTYPE html>
 <html>
   <head>
