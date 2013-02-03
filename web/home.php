@@ -6,7 +6,7 @@
             <?php
             $img  = h($_SESSION['user']['twitter_profile_image_url']);
             $name = h($_SESSION['user']['twitter_screen_name']);
-            echo ('<img width="128" height="128" src="'.$img.'" alt='".$name."' />');
+            echo ('<img width="128" height="128" src="'.$img.'" alt="'.$name.'" />');
             echo ('<p>'.$name.'</p>');
             ?>
             <form class="navbar-form pull-left">
