@@ -30,7 +30,7 @@
 <?php
 class Repository {
     public $name = "";
-    public $img  = "assets/img/dcase_printing.jpg";
+    public $img  = "assets/img/dcase_printing.png";
     public $desc = "";
     public function __construct($name = "", $img = "", $desc = "") {
         $this->name = $name;
@@ -40,11 +40,11 @@ class Repository {
 }
 
 $data = array(
-        new Repository("dcase_test1", "assets/img/dcase_printing.jpg", "This is my first dcase. We have to do lots of work to implemente this dcase viewer. but ..."),
-        new Repository("dcase_test2", "assets/img/dcase_printing.jpg", "This is my second dcase."),
-        new Repository("dcase_test3", "assets/img/dcase_printing.jpg", "This is my third dcase."),
-        new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase."),
-        new Repository("dcase_test5", "assets/img/dcase_printing.jpg", "This is my 5th dcase.")
+        new Repository("dcase_test1", "assets/img/dcase_printing.png", "This is my first dcase. We have to do lots of work to implemente this dcase viewer. but ..."),
+        new Repository("dcase_test2", "assets/img/dcase_printing.png", "This is my second dcase."),
+        new Repository("dcase_test3", "assets/img/dcase_printing.png", "This is my third dcase."),
+        new Repository("dcase_test4", "assets/img/dcase_printing.png", "This is my forth dcase."),
+        new Repository("dcase_test5", "assets/img/dcase_printing.png", "This is my 5th dcase.")
         );
 $view_per_line = 3;
 $is_closed = true;
