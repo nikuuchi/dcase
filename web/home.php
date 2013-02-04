@@ -51,9 +51,24 @@ foreach ($data as $key => $repo) {
     }
     echo('<div class="span6">');
     echo('  <div class="thumbnail">');
-    echo('    <img width="145" height="145" src="'.$repo->img.'" />');
+    echo('    <img class="img-polaroid" width="145" height="145" src="'.$repo->img.'" />');
     echo('    <div class="caption">');
-    echo('      <h3>'.$repo->name.'</h3>');
+    echo('      <div class="row">');
+    echo('        <div class="span4">');
+    echo('          <h3>'.$repo->name.'</h3>');
+?>
+                  </div>
+                  <div class="span2">
+                    <div class="btn-toolbar">
+                      <div class="btn-group">
+                        <a class="btn" href="#"><i class="icon-edit"></i></a>
+                        <a class="btn" href="#"><i class="icon-share"></i></a>
+                        <a class="btn" href="#"><i class="icon-trash"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<?
     echo('      <p>'. $repo->desc.'</p>');
     echo('    </div>');
     echo('  </div>');
