@@ -59,7 +59,7 @@ foreach ($data as $key => $repo) {
     echo('  </div>');
     echo('</div>');
     if ($key % 2 == 1) {
-        echo ('</div">');
+        echo ('</div>');
     }
 }
 ?>
