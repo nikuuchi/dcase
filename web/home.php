@@ -46,7 +46,7 @@ $data = array(
         new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase.")
         );
 foreach ($data as $key => $repo) {
-    if ($key == 0) {
+    if ($key % 2 == 0) {
         echo ('<div class="row-fluid">');
     }
     echo('<div class="span6">');
@@ -58,7 +58,7 @@ foreach ($data as $key => $repo) {
     echo('    </div>');
     echo('  </div>');
     echo('</div>');
-    if ($key == 1) {
+    if ($key % 2 == 1) {
         echo ('</div">');
     }
 }
