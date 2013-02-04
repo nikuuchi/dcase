@@ -41,9 +41,9 @@ class Repository {
 
 $data = array(
         new Repository("dcase_test1", "assets/img/dcase_printing.jpg", "This is my first dcase. We have to do lots of work to implemente this dcase viewer. but ..."),
-        new Repository("dcase_test2", "assets/img/dcase_printing.jpg", "This is my second dcase.");
-        new Repository("dcase_test3", "assets/img/dcase_printing.jpg", "This is my third dcase.");
-        new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase.");
+        new Repository("dcase_test2", "assets/img/dcase_printing.jpg", "This is my second dcase."),
+        new Repository("dcase_test3", "assets/img/dcase_printing.jpg", "This is my third dcase."),
+        new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase.")
         );
 foreach ($array as $key => $value) {
     if ($key == 0) {
