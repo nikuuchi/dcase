@@ -43,39 +43,48 @@ $data = array(
         new Repository("dcase_test1", "assets/img/dcase_printing.jpg", "This is my first dcase. We have to do lots of work to implemente this dcase viewer. but ..."),
         new Repository("dcase_test2", "assets/img/dcase_printing.jpg", "This is my second dcase."),
         new Repository("dcase_test3", "assets/img/dcase_printing.jpg", "This is my third dcase."),
-        new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase.")
+        new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase."),
+        new Repository("dcase_test5", "assets/img/dcase_printing.jpg", "This is my 5th dcase.")
         );
+$view_per_line = 3;
+$is_closed = true;
 foreach ($data as $key => $repo) {
-    if ($key % 2 == 0) {
+    if ($key % $view_per_line == 0) {
         echo ('<div class="row-fluid">');
+        $is_closed = false;
     }
-    echo('<div class="span6">');
+    echo('<div class="span'.(12 / $view_per_line).'">');
     echo('  <div class="thumbnail">');
-    echo('    <img class="img-polaroid" width="145" height="145" src="'.$repo->img.'" />');
     echo('    <div class="caption">');
-    echo('      <div class="row">');
-    echo('        <div class="span4">');
+    echo('      <div class="row-fluid">');
+    echo('        <div class="span8">');
     echo('          <h3>'.$repo->name.'</h3>');
 ?>
                   </div>
-                  <div class="span2">
-                    <div class="btn-toolbar">
-                      <div class="btn-group">
-                        <a class="btn" href="#"><i class="icon-edit"></i></a>
-                        <a class="btn" href="#"><i class="icon-share"></i></a>
-                        <a class="btn" href="#"><i class="icon-trash"></i></a>
-                      </div>
+                  <div class="span2 offset2">
+                    <div class="pull-right">
+                      <a href="#"><i class="icon-edit"></i></a>
+                      <a href="#"><i class="icon-share"></i></a>
+                      <a href="#"><i class="icon-trash"></i></a>
                     </div>
                   </div>
                 </div>
-<?
+
+<?php
+    echo('    </div>');
+    echo('    <img class="img-polaroid" width="145" height="145" src="'.$repo->img.'" />');
+    echo('    <div class="caption">');
     echo('      <p>'. $repo->desc.'</p>');
     echo('    </div>');
     echo('  </div>');
     echo('</div>');
-    if ($key % 2 == 1) {
+    if ($key % $view_per_line == ($view_per_line - 1)) {
         echo ('</div>');
+        $is_closed = true;
     }
+}
+if($is_closed == false) {
+    echo ('</div>');
 }
 ?>
           <hr>
