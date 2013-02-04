@@ -45,7 +45,7 @@ $data = array(
         new Repository("dcase_test3", "assets/img/dcase_printing.jpg", "This is my third dcase."),
         new Repository("dcase_test4", "assets/img/dcase_printing.jpg", "This is my forth dcase.")
         );
-foreach ($array as $key => $value) {
+foreach ($data as $key => $repo) {
     if ($key == 0) {
         echo ('<div class="row-fluid">');
     }
