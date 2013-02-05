@@ -13,6 +13,13 @@ var Node = (function() {
   Node.NextNodeId = undefined;
   return Node;
 })();
+var TimeLine = (function() {
+  function TimeLine() {}
+  TimeLine.UnixTime = undefined;
+  TimeLine.OldNodeId = undefined;
+  TimeLine.NewNodeId = undefined;
+  return TimeLine;
+})();
 var Goal = (function() {
   function Goal() {}
   Goal.prototype = Node;
@@ -52,9 +59,39 @@ var TopGoal = (function() {
   TopGoal.ThisArgumentId = undefined;
   return TopGoal;
 })();
+MyappClient.OpenProcessContext = function(Id,CommiterName) {
+  var param    = [Id,CommiterName];
+  var request  = createMessage("OpenProcessContext", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CloseProcessContext = function(Id,pId,Justification) {
+  var param    = [Id,pId,Justification];
+  var request  = createMessage("CloseProcessContext", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.MergeProcessContext = function(Id,mergeProc) {
+  var param    = [Id,mergeProc];
+  var request  = createMessage("MergeProcessContext", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetProcessContextIds = function(Id) {
+  var param    = [Id];
+  var request  = createMessage("GetProcessContextIds", param);
+  var response = emitRequest(request);
+  return response.result;
+}
 MyappClient.GetRootArgument = function() {
   var param    = [];
   var request  = createMessage("GetRootArgument", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetArgumentsIdList = function() {
+  var param    = [];
+  var request  = createMessage("GetArgumentsIdList", param);
   var response = emitRequest(request);
   return response.result;
 }
@@ -73,6 +110,12 @@ MyappClient.GetNodeTree = function(Id) {
 MyappClient.GetNodeId = function(Id) {
   var param    = [Id];
   var request  = createMessage("GetNodeId", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetNodeTree = function(Id,timeStart,timeEnd) {
+  var param    = [Id,timeStart,timeEnd];
+  var request  = createMessage("GetNodeTree", param);
   var response = emitRequest(request);
   return response.result;
 }
@@ -121,6 +164,42 @@ MyappClient.FindNodeByDescription = function(SearchText) {
 MyappClient.FindContextByProperty = function(SearchText) {
   var param    = [SearchText];
   var request  = createMessage("FindContextByProperty", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetContext = function(Id) {
+  var param    = [Id];
+  var request  = createMessage("GetContext", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.Support = function(EvidenceNodeId,Pid) {
+  var param    = [EvidenceNodeId,Pid];
+  var request  = createMessage("Support", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.Rebuttal = function(EvidenceNodeId,Pid,Diagnosis) {
+  var param    = [EvidenceNodeId,Pid,Diagnosis];
+  var request  = createMessage("Rebuttal", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetAllTimeLine = function(Id) {
+  var param    = [Id];
+  var request  = createMessage("GetAllTimeLine", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetTimeLineByProcessId = function(Id) {
+  var param    = [Id];
+  var request  = createMessage("GetTimeLineByProcessId", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.GetTimeLine = function(timeEnd) {
+  var param    = [timeEnd];
+  var request  = createMessage("GetTimeLine", param);
   var response = emitRequest(request);
   return response.result;
 }
