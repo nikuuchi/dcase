@@ -16,12 +16,27 @@ function drop(ev) {
     ev.target.appendChild(document.getElementById(data));
 }
 </script>
+<style>
+#dropbox {
+    width:500px; height:100px; margin:20px; background-color:#CCFF66; border:1px solid #00cc00;
+}
+#dropbox {
+    width:500px; height:100px; margin:20px; background-color:#CCFF66; border:1px solid #00cc00;
+}
+
+</style>
 </head>
 <body>
 
+
 <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
-<img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69">
+<div id="dcase" ondragover="f_dragover(event)" ondrop="f_drop(event)">
+<img src="./Context.png" draggable="true" ondragstart="drag(event)" />
+<img src="./Evidence.png" draggable="true" ondragstart="drag(event)" />
+<img src="./Goal.png" draggable="true" ondragstart="drag(event)" />
+<img src="./Strategy.png" draggable="true" ondragstart="drag(event)" />
+</div>
 
 </body>
 </html>

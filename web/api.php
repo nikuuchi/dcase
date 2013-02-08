@@ -1,4 +1,6 @@
 <?php
+include_once("config.php");
+include_once("utils.php");
 session_start();
 
 $api = "";
@@ -8,7 +10,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
-if (empty($_SESSTION['user'])) {
+
+if (empty($_SESSION['user'])) {
     error("Please login with user first");
 }
 
@@ -24,7 +27,7 @@ switch ($request[0]) {
 
 function GetRepositoryList($request) {
     $user = h($_SESSION['user']['twitter_screen_name']);
-
+    echo ("RepositoryList\n");
     $repos = array();
     if ($handle = opendir('users/'. $user . '/repos/')) {
         /* ディレクトリをループする際の正しい方法です */

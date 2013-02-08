@@ -4,7 +4,7 @@
           <a class="brand" href="#"><?php echo(PROJECT_NAME); ?></a>
           <ul class="nav">
             <li>
-              <a href="#">Home</a>
+              <a href="home.php">Home</a>
             </li>
             <li>
               <a href="#">About</a>
@@ -14,6 +14,9 @@
             </li>
             <li>
               <a href="viewer.php">View</a>
+            </li>
+            <li>
+              <a href="api.php/GetRepositoryList">ViewRepos</a>
             </li>
 
           </ul>
