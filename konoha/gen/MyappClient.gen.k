@@ -184,9 +184,9 @@ NodeId MyappClient.DeleteLink (NodeId ParentNodeId,Node TargetNode) {
   Json response = emitRequest(request);
   return ConvertToNodeId(response.get("result"));
 }
-NodeId MyappClient.NewLink (NodeId ParentNodeId) {
+NodeId MyappClient.NewLink (NodeId TargetNodeId) {
   Json[] param = [];
-  param.add(ParentNodeId.toJson());
+  param.add(TargetNodeId.toJson());
   Json request  = createMessage("NewLink", param);
   Json response = emitRequest(request);
   return ConvertToNodeId(response.get("result"));
@@ -263,4 +263,60 @@ TimeLineList MyappClient.GetTimeLine (TimeLineId timeEnd) {
   Json request  = createMessage("GetTimeLine", param);
   Json response = emitRequest(request);
   return ConvertToTimeLineList(response.get("result"));
+}
+Goal MyappClient.CreateGoal (String Description) {
+  Json[] param = [];
+  param.add(Description.toJson());
+  Json request  = createMessage("CreateGoal", param);
+  Json response = emitRequest(request);
+  return ConvertToGoal(response.get("result"));
+}
+Evidence MyappClient.CreateEvidence (String Description) {
+  Json[] param = [];
+  param.add(Description.toJson());
+  Json request  = createMessage("CreateEvidence", param);
+  Json response = emitRequest(request);
+  return ConvertToEvidence(response.get("result"));
+}
+Stategy MyappClient.CreateStategy (String Description) {
+  Json[] param = [];
+  param.add(Description.toJson());
+  Json request  = createMessage("CreateStategy", param);
+  Json response = emitRequest(request);
+  return ConvertToStategy(response.get("result"));
+}
+Context MyappClient.CreateContext (String Description) {
+  Json[] param = [];
+  param.add(Description.toJson());
+  Json request  = createMessage("CreateContext", param);
+  Json response = emitRequest(request);
+  return ConvertToContext(response.get("result"));
+}
+DscriptEvidence MyappClient.CreateDscriptEvidence (String script) {
+  Json[] param = [];
+  param.add(script.toJson());
+  Json request  = createMessage("CreateDscriptEvidence", param);
+  Json response = emitRequest(request);
+  return ConvertToDscriptEvidence(response.get("result"));
+}
+DscriptContext MyappClient.CreateDscriptContext (String script) {
+  Json[] param = [];
+  param.add(script.toJson());
+  Json request  = createMessage("CreateDscriptContext", param);
+  Json response = emitRequest(request);
+  return ConvertToDscriptContext(response.get("result"));
+}
+void MyappClient.AddChildren (Node child) {
+  Json[] param = [];
+  param.add(child.toJson());
+  Json request  = createMessage("AddChildren", param);
+  Json response = emitRequest(request);
+  return ConvertTovoid(response.get("result"));
+}
+void MyappClient.AddHistory (Node OldNode) {
+  Json[] param = [];
+  param.add(OldNode.toJson());
+  Json request  = createMessage("AddHistory", param);
+  Json response = emitRequest(request);
+  return ConvertTovoid(response.get("result"));
 }

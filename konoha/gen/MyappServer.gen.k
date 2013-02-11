@@ -159,7 +159,7 @@ void MyappServer.DeleteLink (Json request) {
   emitResponse(request);
 }
 void MyappServer.NewLink (Json request) {
-  NodeId ParentNodeId = ConvetToNodeId(request.get("ParentNodeId"));
+  NodeId TargetNodeId = ConvetToNodeId(request.get("TargetNodeId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
@@ -213,6 +213,46 @@ void MyappServer.GetTimeLineByProcessId (Json request) {
 }
 void MyappServer.GetTimeLine (Json request) {
   TimeLineId timeEnd = ConvetToTimeLineId(request.get("timeEnd"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.CreateGoal (Json request) {
+  String Description = ConvetToString(request.get("Description"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.CreateEvidence (Json request) {
+  String Description = ConvetToString(request.get("Description"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.CreateStategy (Json request) {
+  String Description = ConvetToString(request.get("Description"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.CreateContext (Json request) {
+  String Description = ConvetToString(request.get("Description"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.CreateDscriptEvidence (Json request) {
+  String script = ConvetToString(request.get("script"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.CreateDscriptContext (Json request) {
+  String script = ConvetToString(request.get("script"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.AddChildren (Json request) {
+  Node child = ConvetToNode(request.get("child"));
+  Json request = createMessage("FIXME");
+  emitResponse(request);
+}
+void MyappServer.AddHistory (Json request) {
+  Node OldNode = ConvetToNode(request.get("OldNode"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }

@@ -62,11 +62,11 @@ api NodeId     GetNodeId(ArgumentId Id);
 
 api NodeList GetNodeTree(NodeId Id, TimeLineId timeStart, TImeLineId timeEnd);
 
-//API that return New NodeId
+//### Node Operation that return New NodeId
 api NodeId   Replace(NodeId OldNodeId, Node NewNodeTree);
 api NodeId   Add(NodeId ParentNodeId, Node ChildNodeTree);
 api NodeId   DeleteLink(NodeId ParentNodeId, Node TargetNode);
-api NodeId   NewLink(NodeId ParentNodeId, TargetNodeId);
+api NodeId   NewLink(NodeId ParentNodeId, NodeId TargetNodeId);
 api NodeId   Create(NodeType Type, String Description);
 
 //### Find
@@ -84,3 +84,14 @@ api void Rebuttal(NodeId EvidenceNodeId, ProcessId Pid, String Diagnosis);
 api TimeLineList GetAllTimeLine(ArgumentId Id);
 api TimeLineList GetTimeLineByProcessId(ProcessId Id);
 api TimeLineList GetTimeLine(TimeLineId timeBegin, TimeLineId timeEnd);
+
+//### Internal API
+api Goal             CreateGoal(String Description);
+api Evidence         CreateEvidence(String Description);
+api Stategy          CreateStategy(String Description);
+api Context          CreateContext(String Description);
+api DscriptEvidence  CreateDscriptEvidence(String Description, String script);
+api DscriptContext   CreateDscriptContext(String Description, String script);
+
+api void AddChildren(Node node, Node child);
+api void AddHistory(Node NewNode, Node OldNode);

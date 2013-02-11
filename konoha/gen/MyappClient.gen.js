@@ -152,8 +152,8 @@ MyappClient.DeleteLink = function(ParentNodeId,TargetNode) {
   var response = emitRequest(request);
   return response.result;
 }
-MyappClient.NewLink = function(ParentNodeId) {
-  var param    = [ParentNodeId];
+MyappClient.NewLink = function(TargetNodeId) {
+  var param    = [TargetNodeId];
   var request  = createMessage("NewLink", param);
   var response = emitRequest(request);
   return response.result;
@@ -215,6 +215,54 @@ MyappClient.GetTimeLineByProcessId = function(Id) {
 MyappClient.GetTimeLine = function(timeEnd) {
   var param    = [timeEnd];
   var request  = createMessage("GetTimeLine", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CreateGoal = function(Description) {
+  var param    = [Description];
+  var request  = createMessage("CreateGoal", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CreateEvidence = function(Description) {
+  var param    = [Description];
+  var request  = createMessage("CreateEvidence", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CreateStategy = function(Description) {
+  var param    = [Description];
+  var request  = createMessage("CreateStategy", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CreateContext = function(Description) {
+  var param    = [Description];
+  var request  = createMessage("CreateContext", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CreateDscriptEvidence = function(script) {
+  var param    = [script];
+  var request  = createMessage("CreateDscriptEvidence", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.CreateDscriptContext = function(script) {
+  var param    = [script];
+  var request  = createMessage("CreateDscriptContext", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.AddChildren = function(child) {
+  var param    = [child];
+  var request  = createMessage("AddChildren", param);
+  var response = emitRequest(request);
+  return response.result;
+}
+MyappClient.AddHistory = function(OldNode) {
+  var param    = [OldNode];
+  var request  = createMessage("AddHistory", param);
   var response = emitRequest(request);
   return response.result;
 }
