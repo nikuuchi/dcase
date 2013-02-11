@@ -290,11 +290,6 @@ class JSCodeGen extends IDLCodeGenerator {
         ext = "js";
     }
     void init() {
-        emit("var __extends = this.__extends || function (d, b) {");
-        emit("    function __() { this.constructor = d; }");
-        emit("    __.prototype = b.prototype;");
-        emit("    d.prototype = new __();");
-        emit("}");
         emit("var ${global.AppName} = (function() {");
         emit("  function ${global.AppName}() {}");
         emit("  return ${global.AppName};");
@@ -328,7 +323,9 @@ class JSCodeGen extends IDLCodeGenerator {
         String Extends = "";
         emit("var ${TypeName} = (function(${SuperType}) {");
         emit("  function ${TypeName}() {");
-        emit("    _super.call(this);");
+        if(SuperType != "") {
+            emit("    _super.call(this);");
+        }
         int i = 0;
         String[] keys = TypeDecl.Keys();
         Json sup  = global.TypeMap.get(SuperType);

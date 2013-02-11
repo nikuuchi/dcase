@@ -1,15 +1,9 @@
-var __extends = this.__extends || function (d, b) {
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-}
 var MyappClient = (function() {
   function MyappClient() {}
   return MyappClient;
 })(JsonRPCClient);
 var Node = (function() {
   function Node() {
-    _super.call(this);
     this.ThisNodeId = 0;
     this.PrevNodeId = 0;
     this.BelongedArgumentId = 0;
@@ -21,7 +15,6 @@ var Node = (function() {
 })();
 var TimeLine = (function() {
   function TimeLine() {
-    _super.call(this);
     this.UnixTime = 0;
     this.OldNodeId = undefined;
     this.NewNodeId = undefined;

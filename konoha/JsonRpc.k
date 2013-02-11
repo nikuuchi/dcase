@@ -15,7 +15,6 @@ class JsonRPC {
     Json createMessage() {
         Json json = new Json();
         json.setString("jsonrpc", "2.0");
-        json.setString("method", "echo");
         json.setString("version", "0.0");
         return json;
     }
@@ -36,6 +35,7 @@ class JsonRPCClient extends JsonRPC {
             jsonParam.add(params[i]);
             i = i + 1;
         }
+        json.setString("method", method);
         json.set("params", jsonParam);
         return json;
     }

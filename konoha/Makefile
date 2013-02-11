@@ -9,11 +9,11 @@ clean:
 
 API.idl: Syntax.IDL.k
 
-gen/$(app)Client.gen.k : API.idl
+gen/$(app)Client.gen.k : API.idl Syntax.IDL.k
 	./API.idl app=$(app)Client
 
-gen/$(app)Client.gen.js : API.idl
+gen/$(app)Client.gen.js : API.idl Syntax.IDL.k
 	./API.idl app=$(app)Client format=js
 
-gen/$(app)Server.gen.k : API.idl
+gen/$(app)Server.gen.k : API.idl Syntax.IDL.k
 	./API.idl app=$(app)Server
