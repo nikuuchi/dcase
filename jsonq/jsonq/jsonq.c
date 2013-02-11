@@ -2,6 +2,17 @@
 #include "../../kjson/kjson/kjson.c"
 #include <stdlib.h>
 
+typedef struct Jsonq {
+    JSON Root;
+    JSONMemoryPool mpool;
+    int64_t LastNodeId;
+} Jsonq;
+
+Jsonq *Jsonq_Open(int argc, char const *argv[]);
+void Jsonq_Loadfile(Jsonq *jsonq, int argc, const char *argv[]);
+void Jsonq_Merge(Jsonq *jsonq, JSON json);
+void Jsonq_Close(Jsonq *jsonq);
+
 #define LEN(STRING) (sizeof(STRING) - 1)
 
 #define HASH_(STRING)     HASH_##STRING
@@ -20,12 +31,6 @@ static void HASH_INIT()
 #undef HASH_SET
 }
 
-typedef struct Jsonq {
-    JSON Root;
-    JSONMemoryPool mpool;
-    int64_t LastNodeId;
-} Jsonq;
-
 static bool EndsWith(const char *str, size_t slen, const char *end, size_t elen)
 {
     return strncmp(str + slen - elen, end, elen) == 0;
@@ -33,7 +38,7 @@ static bool EndsWith(const char *str, size_t slen, const char *end, size_t elen)
 
 #define JSON_GET(JSON, STRING) JSON_get(JSON, STRING, LEN(STRING))
 
-static JSONString *ToJSONString(JSON json)
+static inline JSONString *ToJSONString(JSON json)
 {
     if(IsStr(json.val)) {
         return toStr(json.val);
@@ -57,6 +62,27 @@ typedef struct JSONArray_iterator {
     JSON      *Itr, *End;
     JSONArray *Array;
 } JSONArray_iterator;
+
+static JSON JSON_FindCurrentNode(JSON NodeList, JSON node)
+{
+    while(true) {
+        JSON NextId = JSON_GET(node, "NextNodeId");
+        if(JSON_isValid(NextId) && JSONInt_get(NextId) == -1) {
+            return node;
+        }
+        JSONArray_iterator Itr;
+        JSON_ARRAY_EACH(NodeList, Itr.Array, Itr.Itr, Itr.End) {
+            JSON json = *(Itr.Itr);
+            JSON ThisId = JSON_GET(json, "ThisNodeId");
+            if(NextId.bits == ThisId.bits) {
+                node = json;
+                break;
+            }
+        }
+    }
+    assert(0 && "unreachable");
+    return JSON_NOP();
+}
 
 static void Jsonq_Insert(Jsonq *jsonq, JSON branch, JSON NodeList)
 {
@@ -90,6 +116,7 @@ struct Link {
 
 static struct Link *Jsonq_ReplaceNode(Jsonq *jsonq, JSON branch, unsigned Idx, JSON json, JSON NodeList, struct Link *Links)
 {
+    json = JSON_FindCurrentNode(branch, json);
     JSON JsonId = JSON_GET(json, "ThisNodeId");
     int32_t Id  = JSON_getInt(json, "ThisNodeId", LEN("ThisNodeId"));
     struct Link *Cur = Links;
@@ -102,6 +129,7 @@ static struct Link *Jsonq_ReplaceNode(Jsonq *jsonq, JSON branch, unsigned Idx, J
         }
         JSON NewId = JSONInt_new(&jsonq->mpool, ++jsonq->LastNodeId);
         JSONObject_set(&jsonq->mpool, node, "ThisNodeId", LEN("ThisNodeId"), NewId);
+        JSONObject_set(&jsonq->mpool, json, "NextNodeId", LEN("NextNodeId"), NewId);
         JSONArray_append(&jsonq->mpool, branch, node);
         Cur[0].OldId = JsonId;
         Cur[0].NewId = NewId;
@@ -201,14 +229,14 @@ static void Jsonq_merge_object(Jsonq *jsonq, JSON json)
     }
 }
 
-static void Jsonq_merge(Jsonq *jsonq, JSON json)
+void Jsonq_Merge(Jsonq *jsonq, JSON json)
 {
     Jsonq_merge_commits(jsonq, json);
     Jsonq_merge_object(jsonq, json);
     JSON_free(json);
 }
 
-JSON LoadJsonFile(Jsonq *jsonq, const char *filepath)
+static JSON LoadJsonFile(Jsonq *jsonq, const char *filepath)
 {
     FILE *fp = fopen(filepath, "rb");
     if(!fp) {
@@ -227,7 +255,7 @@ JSON LoadJsonFile(Jsonq *jsonq, const char *filepath)
     return json;
 }
 
-void Jsonq_loadfile(Jsonq *jsonq, int argc, const char *argv[])
+void Jsonq_Loadfile(Jsonq *jsonq, int argc, const char *argv[])
 {
     int i;
     for(i = 0; i < argc; i++) {
@@ -237,29 +265,39 @@ void Jsonq_loadfile(Jsonq *jsonq, int argc, const char *argv[])
             if(IsError(json.val)) {
                 Error(JSONError_get(json), __func__, __LINE__);
             }
-            Jsonq_merge(jsonq, json);
+            Jsonq_Merge(jsonq, json);
         }
     }
 }
 
-Jsonq *Jsonq_open(int argc, char const *argv[])
+Jsonq *Jsonq_Open(int argc, char const *argv[])
 {
     Jsonq *jsonq = (Jsonq *) malloc(sizeof(*jsonq));
     jsonq->LastNodeId = 0;
     JSONMemoryPool_Init(&jsonq->mpool);
     HASH_INIT();
     jsonq->Root = JSONObject_new(&jsonq->mpool, 0);
-    Jsonq_loadfile(jsonq, argc, argv);
+    Jsonq_Loadfile(jsonq, argc, argv);
     return jsonq;
 }
 
 struct Jsonq_Visitor {
     void (*Visit)(struct Jsonq_Visitor *visitor, JSON json);
-    JSON CurrentRoot;
-    int indent_level;
+    JSON  CurrentRoot;
+    long  indent_level;
 };
 
-void DumpJson(struct Jsonq_Visitor *visitor, JSON json)
+static void DumpJson(struct Jsonq_Visitor *visitor, JSON json)
+{
+    JSON Desc  = JSON_GET(json, "Description");
+    int32_t i, Id = JSON_getInt(json, "ThisNodeId", LEN("ThisNodeId"));
+    for(i = 0; i < visitor->indent_level; i++) {
+        fprintf(stderr, "  ");
+    }
+    fprintf(stderr, "[Id : %d] Description:\"%s\"\n", Id, JSONString_get(Desc));
+}
+
+static void DumpJsonVerbose(struct Jsonq_Visitor *visitor, JSON json)
 {
     int32_t Id = JSON_getInt(json, "ThisNodeId", LEN("ThisNodeId"));
     JSON NextId = JSON_GET(json, "NextNodeId");
@@ -282,25 +320,18 @@ void DumpJson(struct Jsonq_Visitor *visitor, JSON json)
             fprintf(stderr, "%d,", JSONInt_get(cid));
     }
     fprintf(stderr, "]\n\n");
-
 }
 
-void Jsonq_visit(Jsonq *jsonq, JSON json, struct Jsonq_Visitor *visitor)
+static void Jsonq_visit(Jsonq *jsonq, JSON json, struct Jsonq_Visitor *visitor)
 {
     JSON child = JSON_get(json, "Children", LEN("Children"));
-    JSON Desc  = JSON_GET(json, "Description");
+    visitor->Visit(visitor, json);
     JSONArray_iterator Itr;
-    int32_t i, Id = JSON_getInt(json, "ThisNodeId", LEN("ThisNodeId"));
-    for(i = 0; i < visitor->indent_level; i++) {
-        fprintf(stderr, "  ");
-    }
-    fprintf(stderr, "[Id : %d] Description:\"%s\"\n", Id, JSONString_get(Desc));
-
     JSON_ARRAY_EACH(child, Itr.Array, Itr.Itr, Itr.End) {
         JSONArray_iterator Itr2;
         JSON_ARRAY_EACH(visitor->CurrentRoot, Itr2.Array, Itr2.Itr, Itr2.End) {
             JSON node = *(Itr2.Itr);
-            int32_t Id0 = JSONInt_get((*(Itr.Itr)));
+            int32_t Id0 = JSONInt_get(*(Itr.Itr));
             int32_t Id1 = JSON_getInt(node, "ThisNodeId", LEN("ThisNodeId"));
             if(Id0 == Id1) {
                 visitor->indent_level += 1;
@@ -311,7 +342,7 @@ void Jsonq_visit(Jsonq *jsonq, JSON json, struct Jsonq_Visitor *visitor)
     }
 }
 
-void Jsonq_DumpCurrentTree(Jsonq *jsonq)
+static void Jsonq_DumpCurrentTree(Jsonq *jsonq)
 {
     JSON Key, Val;
     JSONObject_iterator Itr;
@@ -324,43 +355,23 @@ void Jsonq_DumpCurrentTree(Jsonq *jsonq)
     }
 }
 
-void Jsonq_dump(Jsonq *jsonq, bool verbose)
+static void Jsonq_dump(Jsonq *jsonq, bool verbose)
 {
     Jsonq_DumpCurrentTree(jsonq);
     if(!verbose) return;
     JSON Key, Val;
     JSONObject_iterator Itr;
+    struct Jsonq_Visitor visitor = {0, {}, 0};
     JSON_OBJECT_EACH(jsonq->Root, Itr, Key, Val) {
         fprintf(stderr, "branch %s:\n", JSONString_get(Key));
         JSONArray_iterator Itr;
         JSON_ARRAY_EACH(Val, Itr.Array, Itr.Itr, Itr.End) {
-            int32_t Id = JSON_getInt(*(Itr.Itr), "ThisNodeId", LEN("ThisNodeId"));
-            JSON NextId = JSON_GET(*(Itr.Itr), "NextNodeId");
-            JSON PrevId = JSON_GET(*(Itr.Itr), "PrevNodeId");
-            JSON Desc   = JSON_GET(*(Itr.Itr), "Description");
-            fprintf(stderr, "  [Id : %d]\n", Id);
-            if(JSON_isValid(NextId) && JSONInt_get(NextId) != -1) {
-                fprintf(stderr, "    Next : %d\n", JSONInt_get(NextId));
-            }
-            if(JSON_isValid(PrevId) && JSONInt_get(PrevId) != -1) {
-                fprintf(stderr, "    Prev : %d\n", JSONInt_get(PrevId));
-            }
-            fprintf(stderr, "    Description:\"%s\"\n", JSONString_get(Desc));
-            fprintf(stderr, "    Child : [");
-            JSON child = JSON_get(*(Itr.Itr), "Children", LEN("Children"));
-            JSONArray_iterator Itr2;
-            JSON_ARRAY_EACH(child, Itr2.Array, Itr2.Itr, Itr2.End) {
-                JSON cid = *(Itr2.Itr);
-                if(JSON_isValid(cid))
-                    fprintf(stderr, "%d,", JSONInt_get(cid));
-            }
-            fprintf(stderr, "]\n\n");
+            DumpJsonVerbose(&visitor, *(Itr.Itr));
         }
     }
 }
 
-
-void Jsonq_close(Jsonq *jsonq)
+void Jsonq_Close(Jsonq *jsonq)
 {
     JSON_free(jsonq->Root);
     JSONMemoryPool_Delete(&jsonq->mpool);
@@ -371,8 +382,8 @@ JSON Jsonq_match(Jsonq *jsonq, JSONString *string, bool exact);
 
 int main(int argc, char const *argv[])
 {
-    Jsonq *jsonq = Jsonq_open(argc, argv);
+    Jsonq *jsonq = Jsonq_Open(argc, argv);
     Jsonq_dump(jsonq, true);
-    Jsonq_close(jsonq);
+    Jsonq_Close(jsonq);
     return 0;
 }
