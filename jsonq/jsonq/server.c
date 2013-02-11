@@ -42,9 +42,9 @@ static void server_write_callback(struct bufferevent *bev, void *ctx)
 static void server_event_callback(struct bufferevent *bev, short events, void *ctx)
 {
     struct message *message = (struct message *) ctx;
-    if (events & BEV_EVENT_EOF) {
+    if(events & BEV_EVENT_EOF) {
         debug_print(1, "client disconnect");
-    } else if (events & BEV_EVENT_TIMEOUT) {
+    } else if(events & BEV_EVENT_TIMEOUT) {
         debug_print(1, "client timeout e=%p, events=%x", bev, events);
     } else {
         /* Other case, maybe error occur */
@@ -65,7 +65,7 @@ static void server_accept_callback(struct evconnlistener *lev, evutil_socket_t f
             (unsigned short) ntohs(((struct sockaddr_in *) sa)->sin_port), fd);
 
     bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
-    if (bev == NULL) {
+    if(bev == NULL) {
         debug_print(0, "bufferevent_socket_new() failed");
         evutil_closesocket(fd);
         event_base_loopbreak(base);
@@ -96,7 +96,7 @@ static int io_server_init(struct io *io, const char *host, int port, enum IO_MOD
             (struct sockaddr *) &sin, sizeof(sin));
 
     debug_print(9, "host=%s, port=%d", host, port);
-    if (lev == NULL) {
+    if(lev == NULL) {
         debug_print(9, "bind() failed");
         return IO_FAILED;
     }
@@ -106,7 +106,7 @@ static int io_server_init(struct io *io, const char *host, int port, enum IO_MOD
 
 static int io_server_write(struct io *io, void *data, uint32_t nbyte)
 {
-    if (bufferevent_write(io->bev, data, nbyte) != 0) {
+    if(bufferevent_write(io->bev, data, nbyte) != 0) {
         fprintf(stderr, "write error, v=('%p', %u)\n", data, nbyte);
         return IO_FAILED;
     }

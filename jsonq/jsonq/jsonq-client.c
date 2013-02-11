@@ -32,7 +32,7 @@ static int io_client_init(struct io *io, const char *host, int port, enum IO_MOD
 static int io_client_write(struct io *io, void *data, uint32_t nbyte)
 {
     int res = -1;
-    if ((res = write(io->fd, data, nbyte)) < 0) {
+    if((res = write(io->fd, data, nbyte)) < 0) {
         fprintf(stderr, "write error, v=('%p', %u)\n", data, nbyte);
         return IO_FAILED;
     }

@@ -6,15 +6,15 @@
 #define JSONQ_DEBUG 1
 #define JSONQ_DEBUG_LEVEL 0
 #define debug_print(level, ...) do {\
-    if (level >= JSONQ_DEBUG_LEVEL) {\
-        if (JSONQ_DEBUG) {\
+    if(level >= JSONQ_DEBUG_LEVEL) {\
+        if(JSONQ_DEBUG) {\
             fprintf(stderr, "[%s:%d] ", __func__, __LINE__);\
             fprintf(stderr, ## __VA_ARGS__);\
             fprintf(stderr, "\n");\
             fflush(stderr);\
         }\
     }\
-} while (0)
+} while(0)
 
 enum IO_STATUS {
     IO_OK = 0,
