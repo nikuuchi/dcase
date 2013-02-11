@@ -290,11 +290,15 @@ class JSCodeGen extends IDLCodeGenerator {
         ext = "js";
     }
     void init() {
+        emit("var __extends = this.__extends || function (d, b) {");
+        emit("    function __() { this.constructor = d; }");
+        emit("    __.prototype = b.prototype;");
+        emit("    d.prototype = new __();");
+        emit("}");
         emit("var ${global.AppName} = (function() {");
         emit("  function ${global.AppName}() {}");
-        emit("  ${global.AppName}.prototype = ${global.AppType};");
         emit("  return ${global.AppName};");
-        emit("})();");
+        emit("})(${global.AppType});");
     }
     void emitMethod(String ReturnType, String MethodName, Json Param) {
         int i = 0;
@@ -322,23 +326,33 @@ class JSCodeGen extends IDLCodeGenerator {
     }
     void emitType(String TypeName, String SuperType, Json TypeDecl) {
         String Extends = "";
-        emit("var ${TypeName} = (function() {");
-        emit("  function ${TypeName}() {}");
-        if (SuperType != "") {
-            emit("  ${TypeName}.prototype = ${SuperType};");
-        }
+        emit("var ${TypeName} = (function(${SuperType}) {");
+        emit("  function ${TypeName}() {");
+        emit("    _super.call(this);");
         int i = 0;
         String[] keys = TypeDecl.Keys();
         Json sup  = global.TypeMap.get(SuperType);
         while (i < keys.getlength()) {
             String k = keys[i];
             if (!sup.hasKey(k)) {
-                emit("  ${TypeName}.${k} = undefined;");
+                String p    = TypeDecl.getString(k);
+                String type = global.TypeMap.get(p).toString();
+                String defval = "undefined";
+                if (type == "\"int\"") {
+                    defval = "0";
+                } else if (type == "\"String\"") {
+                    defval = "\"\"";
+                }
+                emit("    this.${k} = ${defval};");
             }
             i = i + 1;
         }
+        emit("  }");
+        if (SuperType != "") {
+            emit("  __extends.call(${TypeName}, this);");
+        }
         emit("  return ${TypeName};");
-        emit("})();");
+        emit("})(${SuperType});");
     }
 }
 

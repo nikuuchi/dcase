@@ -1,64 +1,86 @@
+var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}
 var MyappClient = (function() {
   function MyappClient() {}
-  MyappClient.prototype = JsonRPCClient;
   return MyappClient;
-})();
+})(JsonRPCClient);
 var Node = (function() {
-  function Node() {}
-  Node.ThisNodeId = undefined;
-  Node.PrevNodeId = undefined;
-  Node.BelongedArgumentId = undefined;
-  Node.Children = undefined;
-  Node.Attributes = undefined;
-  Node.NextNodeId = undefined;
+  function Node() {
+    _super.call(this);
+    this.ThisNodeId = 0;
+    this.PrevNodeId = 0;
+    this.BelongedArgumentId = 0;
+    this.Children = undefined;
+    this.Attributes = undefined;
+    this.NextNodeId = 0;
+  }
   return Node;
 })();
 var TimeLine = (function() {
-  function TimeLine() {}
-  TimeLine.UnixTime = undefined;
-  TimeLine.OldNodeId = undefined;
-  TimeLine.NewNodeId = undefined;
+  function TimeLine() {
+    _super.call(this);
+    this.UnixTime = 0;
+    this.OldNodeId = undefined;
+    this.NewNodeId = undefined;
+  }
   return TimeLine;
 })();
-var Goal = (function() {
-  function Goal() {}
-  Goal.prototype = Node;
+var Goal = (function(Node) {
+  function Goal() {
+    _super.call(this);
+  }
+  __extends.call(Goal, this);
   return Goal;
-})();
-var Evidence = (function() {
-  function Evidence() {}
-  Evidence.prototype = Node;
+})(Node);
+var Evidence = (function(Node) {
+  function Evidence() {
+    _super.call(this);
+  }
+  __extends.call(Evidence, this);
   return Evidence;
-})();
-var Stategy = (function() {
-  function Stategy() {}
-  Stategy.prototype = Node;
+})(Node);
+var Stategy = (function(Node) {
+  function Stategy() {
+    _super.call(this);
+  }
+  __extends.call(Stategy, this);
   return Stategy;
-})();
-var Context = (function() {
-  function Context() {}
-  Context.prototype = Node;
+})(Node);
+var Context = (function(Node) {
+  function Context() {
+    _super.call(this);
+  }
+  __extends.call(Context, this);
   return Context;
-})();
-var DscriptEvidence = (function() {
-  function DscriptEvidence() {}
-  DscriptEvidence.prototype = Evidence;
-  DscriptEvidence.script = undefined;
+})(Node);
+var DscriptEvidence = (function(Evidence) {
+  function DscriptEvidence() {
+    _super.call(this);
+    this.script = "";
+  }
+  __extends.call(DscriptEvidence, this);
   return DscriptEvidence;
-})();
-var DscriptContext = (function() {
-  function DscriptContext() {}
-  DscriptContext.prototype = Context;
-  DscriptContext.script = undefined;
+})(Evidence);
+var DscriptContext = (function(Context) {
+  function DscriptContext() {
+    _super.call(this);
+    this.script = "";
+  }
+  __extends.call(DscriptContext, this);
   return DscriptContext;
-})();
-var TopGoal = (function() {
-  function TopGoal() {}
-  TopGoal.prototype = Goal;
-  TopGoal.TopGoalNodeId = undefined;
-  TopGoal.ThisArgumentId = undefined;
+})(Context);
+var TopGoal = (function(Goal) {
+  function TopGoal() {
+    _super.call(this);
+    this.TopGoalNodeId = 0;
+    this.ThisArgumentId = 0;
+  }
+  __extends.call(TopGoal, this);
   return TopGoal;
-})();
+})(Goal);
 MyappClient.OpenProcessContext = function(Id,CommiterName) {
   var param    = [Id,CommiterName];
   var request  = createMessage("OpenProcessContext", param);
