@@ -1,0 +1,46 @@
+branch mybranch:
+[Id : 0] Description:"00000"
+  [Id : 1] Description:"00001"
+    [Id : 5] Description:"commit000-1"
+      [Id : 6] Description:"commit001-0"
+    [Id : 8] Description:"commit001-2"
+branch mybranch:
+  [Id : 0]
+    Description:"00000"
+    Child : [1,]
+
+  [Id : 1]
+    Description:"00001"
+    Child : [5,8,]
+
+  [Id : 2]
+    Description:"00002"
+    Child : [4,]
+
+  [Id : 3]
+    Description:"00003"
+    Child : []
+
+  [Id : 4]
+    Description:"commit000-0"
+    Child : []
+
+  [Id : 5]
+    Prev : 2
+    Description:"commit000-1"
+    Child : [6,]
+
+  [Id : 6]
+    Description:"commit001-0"
+    Child : []
+
+  [Id : 7]
+    Prev : 2
+    Description:"commit001-1"
+    Child : []
+
+  [Id : 8]
+    Prev : 3
+    Description:"commit001-2"
+    Child : []
+
