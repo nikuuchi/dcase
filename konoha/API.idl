@@ -23,6 +23,7 @@ Type Node {
     attribute ArgumentId BelongedArgumentId;
     attribute NodeList   Children;
     attribute StringMap  Attributes;
+    attribute String Description
 }
 
 Type TimeLine {
@@ -33,7 +34,7 @@ Type TimeLine {
 
 Type Goal extends Node {};
 Type Evidence extends Node {};
-Type Stategy extends Node {};
+Type Strategy extends Node {};
 Type Context extends Node {};
 Type DscriptEvidence extends Evidence {
     attribute String script;
@@ -60,7 +61,7 @@ api Node       GetNode(NodeId Id); // return Node Without child node
 api NodeList   GetNodeTree(NodeId Id); // Node with child node
 api NodeId     GetNodeId(ArgumentId Id);
 
-api NodeList GetNodeTree(NodeId Id, TimeLineId timeStart, TImeLineId timeEnd);
+api NodeList GetNodeTreeWithTimeLine(NodeId Id, TimeLineId timeStart, TImeLineId timeEnd);
 
 //### Node Operation that return New NodeId
 api NodeId   Replace(NodeId OldNodeId, Node NewNodeTree);
@@ -88,10 +89,10 @@ api TimeLineList GetTimeLine(TimeLineId timeBegin, TimeLineId timeEnd);
 //### Internal API
 api Goal             CreateGoal(String Description);
 api Evidence         CreateEvidence(String Description);
-api Stategy          CreateStategy(String Description);
+api Strategy         CreateStrategy(String Description);
 api Context          CreateContext(String Description);
 api DscriptEvidence  CreateDscriptEvidence(String Description, String script);
 api DscriptContext   CreateDscriptContext(String Description, String script);
 
-api void AddChildren(Node node, Node child);
+api void AddChildren(Node ThisNode, Node Child);
 api void AddHistory(Node NewNode, Node OldNode);

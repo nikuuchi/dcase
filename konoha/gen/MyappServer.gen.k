@@ -56,6 +56,7 @@ const NodeList=Array[Object];
   return a;
 }
 class Node  {
+  String Description;
   NodeId ThisNodeId;
   NodeId PrevNodeId;
   ArgumentId BelongedArgumentId;
@@ -72,7 +73,7 @@ class Goal extends Node {
 }
 class Evidence extends Node {
 }
-class Stategy extends Node {
+class Strategy extends Node {
 }
 class Context extends Node {
 }
@@ -87,26 +88,27 @@ class TopGoal extends Goal {
   ArgumentId ThisArgumentId;
 }
 void MyappServer.OpenProcessContext (Json request) {
-  ArgumentId Id = ConvetToArgumentId(request.get("Id"));
-  String CommiterName = ConvetToString(request.get("CommiterName"));
+  Id ArgumentId = ConvetToId(request.get("ArgumentId"));
+  CommiterName String = ConvetToCommiterName(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.CloseProcessContext (Json request) {
-  ArgumentId Id = ConvetToArgumentId(request.get("Id"));
-  ProcessId pId = ConvetToProcessId(request.get("pId"));
-  String Justification = ConvetToString(request.get("Justification"));
+  Id ArgumentId = ConvetToId(request.get("ArgumentId"));
+  pId ProcessId = ConvetTopId(request.get("ProcessId"));
+  Justification String = ConvetToJustification(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.MergeProcessContext (Json request) {
-  ArgumentId Id = ConvetToArgumentId(request.get("Id"));
-  ProcessId mergeProc = ConvetToProcessId(request.get("mergeProc"));
+  Id ArgumentId = ConvetToId(request.get("ArgumentId"));
+  targetProc ProcessId = ConvetTotargetProc(request.get("ProcessId"));
+  mergeProc ProcessId = ConvetTomergeProc(request.get("ProcessId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetProcessContextIds (Json request) {
-  ArgumentId Id = ConvetToArgumentId(request.get("Id"));
+  Id ArgumentId = ConvetToId(request.get("ArgumentId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
@@ -119,140 +121,146 @@ void MyappServer.GetArgumentsIdList (Json request) {
   emitResponse(request);
 }
 void MyappServer.GetNode (Json request) {
-  NodeId Id = ConvetToNodeId(request.get("Id"));
+  Id NodeId = ConvetToId(request.get("NodeId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetNodeTree (Json request) {
-  NodeId Id = ConvetToNodeId(request.get("Id"));
+  Id NodeId = ConvetToId(request.get("NodeId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetNodeId (Json request) {
-  ArgumentId Id = ConvetToArgumentId(request.get("Id"));
+  Id ArgumentId = ConvetToId(request.get("ArgumentId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
-void MyappServer.GetNodeTree (Json request) {
-  NodeId Id = ConvetToNodeId(request.get("Id"));
-  TimeLineId timeStart = ConvetToTimeLineId(request.get("timeStart"));
-  TImeLineId timeEnd = ConvetToTImeLineId(request.get("timeEnd"));
+void MyappServer.GetNodeTreeWithTimeLine (Json request) {
+  Id NodeId = ConvetToId(request.get("NodeId"));
+  timeStart TimeLineId = ConvetTotimeStart(request.get("TimeLineId"));
+  timeEnd TImeLineId = ConvetTotimeEnd(request.get("TImeLineId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.Replace (Json request) {
-  NodeId OldNodeId = ConvetToNodeId(request.get("OldNodeId"));
-  Node NewNodeTree = ConvetToNode(request.get("NewNodeTree"));
+  OldNodeId NodeId = ConvetToOldNodeId(request.get("NodeId"));
+  NewNodeTree Node = ConvetToNewNodeTree(request.get("Node"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.Add (Json request) {
-  NodeId ParentNodeId = ConvetToNodeId(request.get("ParentNodeId"));
-  Node ChildNodeTree = ConvetToNode(request.get("ChildNodeTree"));
+  ParentNodeId NodeId = ConvetToParentNodeId(request.get("NodeId"));
+  ChildNodeTree Node = ConvetToChildNodeTree(request.get("Node"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.DeleteLink (Json request) {
-  NodeId ParentNodeId = ConvetToNodeId(request.get("ParentNodeId"));
-  Node TargetNode = ConvetToNode(request.get("TargetNode"));
+  ParentNodeId NodeId = ConvetToParentNodeId(request.get("NodeId"));
+  TargetNode Node = ConvetToTargetNode(request.get("Node"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.NewLink (Json request) {
-  NodeId TargetNodeId = ConvetToNodeId(request.get("TargetNodeId"));
+  ParentNodeId NodeId = ConvetToParentNodeId(request.get("NodeId"));
+  TargetNodeId NodeId = ConvetToTargetNodeId(request.get("NodeId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.Create (Json request) {
-  String Description = ConvetToString(request.get("Description"));
+  Description String = ConvetToDescription(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.FindNodeFrom (Json request) {
-  NodeId NodeIdSearchFrom = ConvetToNodeId(request.get("NodeIdSearchFrom"));
+  NodeIdSearchFrom NodeId = ConvetToNodeIdSearchFrom(request.get("NodeId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.FindNodeByDescription (Json request) {
-  String SearchText = ConvetToString(request.get("SearchText"));
+  SearchText String = ConvetToSearchText(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.FindContextByProperty (Json request) {
-  String SearchText = ConvetToString(request.get("SearchText"));
+  SearchText String = ConvetToSearchText(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetContext (Json request) {
-  NodeId Id = ConvetToNodeId(request.get("Id"));
+  Id NodeId = ConvetToId(request.get("NodeId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.Support (Json request) {
-  NodeId EvidenceNodeId = ConvetToNodeId(request.get("EvidenceNodeId"));
-  ProcessId Pid = ConvetToProcessId(request.get("Pid"));
+  EvidenceNodeId NodeId = ConvetToEvidenceNodeId(request.get("NodeId"));
+  Pid ProcessId = ConvetToPid(request.get("ProcessId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.Rebuttal (Json request) {
-  NodeId EvidenceNodeId = ConvetToNodeId(request.get("EvidenceNodeId"));
-  ProcessId Pid = ConvetToProcessId(request.get("Pid"));
-  String Diagnosis = ConvetToString(request.get("Diagnosis"));
+  EvidenceNodeId NodeId = ConvetToEvidenceNodeId(request.get("NodeId"));
+  Pid ProcessId = ConvetToPid(request.get("ProcessId"));
+  Diagnosis String = ConvetToDiagnosis(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetAllTimeLine (Json request) {
-  ArgumentId Id = ConvetToArgumentId(request.get("Id"));
+  Id ArgumentId = ConvetToId(request.get("ArgumentId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetTimeLineByProcessId (Json request) {
-  ProcessId Id = ConvetToProcessId(request.get("Id"));
+  Id ProcessId = ConvetToId(request.get("ProcessId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.GetTimeLine (Json request) {
-  TimeLineId timeEnd = ConvetToTimeLineId(request.get("timeEnd"));
+  timeBegin TimeLineId = ConvetTotimeBegin(request.get("TimeLineId"));
+  timeEnd TimeLineId = ConvetTotimeEnd(request.get("TimeLineId"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.CreateGoal (Json request) {
-  String Description = ConvetToString(request.get("Description"));
+  Description String = ConvetToDescription(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.CreateEvidence (Json request) {
-  String Description = ConvetToString(request.get("Description"));
+  Description String = ConvetToDescription(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
-void MyappServer.CreateStategy (Json request) {
-  String Description = ConvetToString(request.get("Description"));
+void MyappServer.CreateStrategy (Json request) {
+  Description String = ConvetToDescription(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.CreateContext (Json request) {
-  String Description = ConvetToString(request.get("Description"));
+  Description String = ConvetToDescription(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.CreateDscriptEvidence (Json request) {
-  String script = ConvetToString(request.get("script"));
+  Description String = ConvetToDescription(request.get("String"));
+  script String = ConvetToscript(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.CreateDscriptContext (Json request) {
-  String script = ConvetToString(request.get("script"));
+  Description String = ConvetToDescription(request.get("String"));
+  script String = ConvetToscript(request.get("String"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.AddChildren (Json request) {
-  Node child = ConvetToNode(request.get("child"));
+  ThisNode Node = ConvetToThisNode(request.get("Node"));
+  Child Node = ConvetToChild(request.get("Node"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }
 void MyappServer.AddHistory (Json request) {
-  Node OldNode = ConvetToNode(request.get("OldNode"));
+  NewNode Node = ConvetToNewNode(request.get("Node"));
+  OldNode Node = ConvetToOldNode(request.get("Node"));
   Json request = createMessage("FIXME");
   emitResponse(request);
 }

@@ -138,8 +138,6 @@ Node TypeMethod(Node node, NameSpace ns, Object o) {
     String MethodName = node.getToken("$Symbol", null).GetParsedText();
     String ReturnType = node.getToken("Return", null).GetParsedText();
     Json Param = node.getParsedObject("$IDLParam") as Json;
-    //if (Param != null) {
-    //}
     global.gen.emitMethod(ReturnType, MethodName, Param);
     node.done();
     return node;
@@ -155,7 +153,7 @@ int ParseParam(Node node, Symbol sym, Token[] tokenList, int beginIdx, int opIdx
         /* case: Type Field */
         if (tk0.Is("$Symbol") || tk0.Is("$Type")) {
             if(tk1.Is("$Symbol")) {
-                json.setString(tk0.GetParsedText(), tk1.GetParsedText());
+                json.setString(tk1.GetParsedText(), tk0.GetParsedText());
             }
         }
         i = i + 3;
@@ -238,7 +236,7 @@ class KonohaCodeGen extends IDLCodeGenerator {
                 if (i != 0) {
                     ParamInfo = ParamInfo + ",";
                 }
-                ParamInfo = ParamInfo + k + " " + Param.getString(k);
+                ParamInfo = ParamInfo + Param.getString(k) + " " + k;
             }
             emit("${ReturnType} ${global.AppName}.${MethodName} (${ParamInfo}) {");
             emit("  Json[] param = [];");
@@ -309,7 +307,7 @@ class JSCodeGen extends IDLCodeGenerator {
             if (i != 0) {
                 ParamInfo = ParamInfo + ",";
             }
-            ParamInfo = ParamInfo + Param.getString(k);
+            ParamInfo = ParamInfo + (k);
         }
         emit("${global.AppName}.${MethodName} = function(${ParamInfo}) {");
         emit("  var param    = [${ParamInfo}];");
