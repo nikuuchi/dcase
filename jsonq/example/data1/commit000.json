@@ -1,0 +1,37 @@
+{
+    "commit" : [
+        {
+            "branch-name" : "mybranch",
+            "command"   : "insert",
+            "node-list" : [
+                {
+                    "NodeType" : "Evidence",
+                    "ParentNodeId" : 2,
+                    "ThisNodeId" : -1,
+                    "PrevNodeId" : -1,
+                    "NextNodeId" : -1,
+                    "BelongedArgumentId" : 0,
+                    "Children" : [],
+                    "Description" : "commit000-0",
+                    "Attributes" : {}
+                }
+            ]
+        },
+        {
+            "branch-name" : "mybranch",
+            "command"   : "replace",
+            "node-list" : [
+                {
+                    "NodeType" : "Evidence",
+                    "ThisNodeId" : -1,
+                    "PrevNodeId" :  2,
+                    "NextNodeId" : -1,
+                    "BelongedArgumentId" : 0,
+                    "Children" : [],
+                    "Description" : "commit000-1",
+                    "Attributes" : {}
+                }
+            ]
+        }
+    ]
+}

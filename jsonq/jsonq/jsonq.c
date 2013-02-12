@@ -1,17 +1,6 @@
-#include "io.h"
-#include "../../kjson/kjson/kjson.c"
 #include <stdlib.h>
-
-typedef struct Jsonq {
-    JSON Root;
-    JSONMemoryPool mpool;
-    int64_t LastNodeId;
-} Jsonq;
-
-Jsonq *Jsonq_Open(int argc, char const *argv[]);
-void Jsonq_Loadfile(Jsonq *jsonq, int argc, const char *argv[]);
-void Jsonq_Merge(Jsonq *jsonq, JSON json);
-void Jsonq_Close(Jsonq *jsonq);
+#include "jsonq.h"
+#include "../../kjson/kjson/kjson.c"
 
 #define LEN(STRING) (sizeof(STRING) - 1)
 
@@ -188,7 +177,6 @@ static void Jsonq_op(Jsonq *jsonq, JSON command, JSON BranchName, JSON NodeList)
             Jsonq_Insert(jsonq, branch, NodeList);
         }
         else if(JSONString_hashCode(op) == HASH_(replace)) {
-            //fprintf(stderr, "replace %s\n", JSONString_get(BranchName));
             Jsonq_Replace(jsonq, branch, NodeList);
         }
         else if(JSONString_hashCode(op) == HASH_(remove)) {
@@ -197,10 +185,29 @@ static void Jsonq_op(Jsonq *jsonq, JSON command, JSON BranchName, JSON NodeList)
         }
     }
 }
+static void Jsonq_merge_files(Jsonq *jsonq, JSON json)
+{
+    JSON files = JSON_GET(json, "files");
+    if(!JSON_isValid(files))
+        return;
+    JSONArray_iterator Itr;
+    JSON_ARRAY_EACH(files, Itr.Array, Itr.Itr, Itr.End) {
+        JSON obj = *(Itr.Itr);
+        if(IsStr(obj.val)) {
+            const char *argv[1];
+            argv[0] = JSONString_get(obj);
+            fprintf(stderr, "%s\n", argv[0]);
+            Jsonq_Loadfile(jsonq, 1, argv);
+        }
+    }
+    JSONObject_remove(&jsonq->mpool, json, "files", LEN("files"));
+}
 
 static void Jsonq_merge_commits(Jsonq *jsonq, JSON json)
 {
     JSON commits = JSON_GET(json, "commit");
+    if(!JSON_isValid(commits))
+        return;
     JSONArray_iterator Itr;
     JSON_ARRAY_EACH(commits, Itr.Array, Itr.Itr, Itr.End) {
         JSON obj = *(Itr.Itr);
@@ -231,6 +238,7 @@ static void Jsonq_merge_object(Jsonq *jsonq, JSON json)
 
 void Jsonq_Merge(Jsonq *jsonq, JSON json)
 {
+    Jsonq_merge_files(jsonq, json);
     Jsonq_merge_commits(jsonq, json);
     Jsonq_merge_object(jsonq, json);
     JSON_free(json);
@@ -324,9 +332,9 @@ static void DumpJsonVerbose(struct Jsonq_Visitor *visitor, JSON json)
 
 static void Jsonq_visit(Jsonq *jsonq, JSON json, struct Jsonq_Visitor *visitor)
 {
-    JSON child = JSON_get(json, "Children", LEN("Children"));
     visitor->Visit(visitor, json);
     JSONArray_iterator Itr;
+    JSON child = JSON_get(json, "Children", LEN("Children"));
     JSON_ARRAY_EACH(child, Itr.Array, Itr.Itr, Itr.End) {
         JSONArray_iterator Itr2;
         JSON_ARRAY_EACH(visitor->CurrentRoot, Itr2.Array, Itr2.Itr, Itr2.End) {
@@ -377,8 +385,6 @@ void Jsonq_Close(Jsonq *jsonq)
     JSONMemoryPool_Delete(&jsonq->mpool);
     free(jsonq);
 }
-
-JSON Jsonq_match(Jsonq *jsonq, JSONString *string, bool exact);
 
 int main(int argc, char const *argv[])
 {

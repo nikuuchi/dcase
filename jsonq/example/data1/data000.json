@@ -1,0 +1,45 @@
+{
+    "mybranch" :
+    [
+        {
+            "NodeType" : "Goal",
+            "ThisNodeId" :  0,
+            "PrevNodeId" : -1,
+            "NextNodeId" : -1,
+            "BelongedArgumentId" : 0,
+            "Children" : [1],
+            "Description" : "00000",
+            "Attributes" : {}
+        },
+        {
+            "NodeType" : "Strategy",
+            "ThisNodeId" :  1,
+            "PrevNodeId" : -1,
+            "NextNodeId" : -1,
+            "BelongedArgumentId" : 0,
+            "Children" : [2, 3],
+            "Description" : "00001",
+            "Attributes" : {}
+        },
+        {
+            "NodeType" : "Goal",
+            "ThisNodeId" :  2,
+            "PrevNodeId" : -1,
+            "NextNodeId" : -1,
+            "BelongedArgumentId" : 0,
+            "Children" : [],
+            "Description" : "00002",
+            "Attributes" : {}
+        },
+        {
+            "NodeType" : "Goal",
+            "ThisNodeId" :  3,
+            "PrevNodeId" : -1,
+            "NextNodeId" : -1,
+            "BelongedArgumentId" : 0,
+            "Children" : [],
+            "Description" : "00003",
+            "Attributes" : {}
+        }
+    ]
+}
