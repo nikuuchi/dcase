@@ -7,10 +7,10 @@
                 {
                     "NodeType" : "Evidence",
                     "ParentNodeId" : 2,
-                    "ThisNodeId" : -1,
-                    "PrevNodeId" : -1,
-                    "NextNodeId" : -1,
-                    "BelongedArgumentId" : 0,
+                    "ThisNodeId" :  0,
+                    "PrevNodeId" :  0,
+                    "NextNodeId" :  0,
+                    "BelongedArgumentId" : 1,
                     "Children" : [],
                     "Description" : "commit000-0",
                     "Attributes" : {}
@@ -23,10 +23,10 @@
             "node-list" : [
                 {
                     "NodeType" : "Evidence",
-                    "ThisNodeId" : -1,
+                    "ThisNodeId" :  0,
                     "PrevNodeId" :  2,
-                    "NextNodeId" : -1,
-                    "BelongedArgumentId" : 0,
+                    "NextNodeId" :  0,
+                    "BelongedArgumentId" : 1,
                     "Children" : [],
                     "Description" : "commit000-1",
                     "Attributes" : {}

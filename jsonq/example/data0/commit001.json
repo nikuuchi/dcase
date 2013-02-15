@@ -7,10 +7,10 @@
                 {
                     "NodeType" : "Context",
                     "ParentNodeId" : 5,
-                    "ThisNodeId" : -1,
-                    "PrevNodeId" : -1,
-                    "NextNodeId" : -1,
-                    "BelongedArgumentId" : 0,
+                    "ThisNodeId" :  0,
+                    "PrevNodeId" :  0,
+                    "NextNodeId" :  0,
+                    "BelongedArgumentId" : 1,
                     "Children" : [],
                     "Description" : "commit001-0",
                     "Attributes" : {}
@@ -24,10 +24,10 @@
                 {
                     "NodeType" : "Evidence",
                     "ParentNodeId" :  1,
-                    "ThisNodeId"   : -1,
+                    "ThisNodeId"   :  0,
                     "PrevNodeId"   :  2,
-                    "NextNodeId"   : -1,
-                    "BelongedArgumentId" : 0,
+                    "NextNodeId"   :  0,
+                    "BelongedArgumentId" : 1,
                     "Children" : [],
                     "Description" : "commit001-1",
                     "Attributes" : {}
@@ -35,10 +35,10 @@
                 {
                     "NodeType" : "Evidence",
                     "ParentNodeId" :  1,
-                    "ThisNodeId"   : -1,
+                    "ThisNodeId"   :  0,
                     "PrevNodeId"   :  3,
-                    "NextNodeId"   : -1,
-                    "BelongedArgumentId" : 0,
+                    "NextNodeId"   :  0,
+                    "BelongedArgumentId" : 1,
                     "Children" : [],
                     "Description" : "commit001-2",
                     "Attributes" : {}
