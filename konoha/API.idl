@@ -4,95 +4,28 @@ import("Type.Json");
 const Map[String]=StringMap;
 
 Load("Syntax.IDL.k");
-// DataType
-alias int NodeId     // Id for Node
-alias int ArgumentId // Id for NodeTree
-alias int TimeLineId // Id for TimeLine
-alias int ProcessId  // Id for Process
-alias StringMap ProcessContext
 
-alias int NodeType;
-array NodeId NodeIdList;
-array ProcessId ProcessIdList;
-array Object NodeList; /* FIXME */
+array int IntList;
 
-Type Node {
-    attribute NodeId ThisNodeId;
-    attribute NodeId PrevNodeId;
-    attribute NodeId NextNodeId;
-    attribute ArgumentId BelongedArgumentId;
-    attribute NodeList   Children;
-    attribute StringMap  Attributes;
-    attribute String Description
-}
-
-Type TimeLine {
-    attribute int    UnixTime;
-    attribute NodeIdList OldNodeId;
-    attribute NodeIdList NewNodeId;
-}
-
-Type Goal extends Node {};
-Type Evidence extends Node {};
-Type Strategy extends Node {};
-Type Context extends Node {};
-Type DscriptEvidence extends Evidence {
-    attribute String script;
-};
-Type DscriptContext  extends Context {
-    attribute String script;
-};
-Type TopGoal extends Goal {
-    attribute ArgumentId ThisArgumentId;
-    attribute NodeId TopGoalNodeId;
-}
-
-// API
-//### ProcessContext
-api ProcessId OpenProcessContext(ArgumentId Id, ProcessType Type, String CommiterName);
-api ProcessId CloseProcessContext(ArgumentId Id, ProcessId pId, String Justification);
-api ProcessId MergeProcessContext(ArgumentId Id, ProcessId targetProc, ProcessId mergeProc);
-api ProcessIdList GetProcessContextIds(ArgumentId Id);
-
-//### Node Operation
-api Node       GetRootArgument();
-api NodeIdList GetArgumentsIdList() //Return TopGoal ArgumentId List
-api Node       GetNode(NodeId Id); // return Node Without child node
-api NodeList   GetNodeTree(NodeId Id); // Node with child node
-api NodeId     GetNodeId(ArgumentId Id);
-
-api NodeList GetNodeTreeWithTimeLine(NodeId Id, TimeLineId timeStart, TImeLineId timeEnd);
-
-//### Node Operation that return New NodeId
-api NodeId   Replace(NodeId OldNodeId, Node NewNodeTree);
-api NodeId   Add(NodeId ParentNodeId, Node ChildNodeTree);
-api NodeId   DeleteLink(NodeId ParentNodeId, Node TargetNode);
-api NodeId   NewLink(NodeId ParentNodeId, NodeId TargetNodeId);
-api NodeId   Create(NodeType Type, String Description);
-
-//### Find
-api NodeIdList FindNodeFrom(NodeType Type, NodeId NodeIdSearchFrom);
-api NodeIdList FindNodeByDescription(String SearchText);
-api NodeIdList FindContextByProperty(String SearchText);
-
-//### D-Script
-api ContextJson GetContext(NodeId Id);
-api void Support(NodeId EvidenceNodeId, ProcessId Pid);
-api void Rebuttal(NodeId EvidenceNodeId, ProcessId Pid, String Diagnosis);
-// TODO Need to design D-Script API
-
-//### TimeLine
-api TimeLineList GetAllTimeLine(ArgumentId Id);
-api TimeLineList GetTimeLineByProcessId(ProcessId Id);
-api TimeLineList GetTimeLine(TimeLineId timeBegin, TimeLineId timeEnd);
-
-//### Internal API
-api Goal             CreateGoal(String Description);
-api Evidence         CreateEvidence(String Description);
-api Strategy         CreateStrategy(String Description);
-api Context          CreateContext(String Description);
-api DscriptEvidence  CreateDscriptEvidence(String Description, String script);
-api DscriptContext   CreateDscriptContext(String Description, String script);
-
-api void AddChildren(Node ThisNode, Node Child);
-api void AddHistory(Node NewNode, Node OldNode);
+api int CreateTopGoal(String description, int processType, String Justification, String commiter)
+api int DeleteLink(int ParentNodeId, Json TargetNode)
+api int NewLink(int ParentNodeId, int TargetNodeId)
+api int CreateNode(int BelongedArgumentId, Json json)
+api void UpdateNode(int BelongedArgumentId, Json json)
+api void DeleteNode(int BelongedArgumentId, Json json)
+api IntList FindNodeFrom(String NodeType, int NodeIdSearchFrom)
+api IntList FindNodeByDescription(String SearchText)
+api IntList FindContextByProperty(String SearchText)
+api Json Commit(int BelongedArgumentId, Json args)
+api Json getNode(int node_id)
+api IntList getArgumentList()
+api Json getNodeTree(int BelongedArgumentId)
+api Json getNodeTree(int BelongedArgumentId, int SnapshotId)
+api Json getNodeTree(int BelongedArgumentId, int snapshot_start_id, int snapshot_end_id)
+api int OpenProcessContext(int BelongedArgumentId, int process_type, String Justification, String commiter_name)
+api int CloseProcessContext(int BelongedArgumentId, int process_id, String Justification)
+api IntList getProcessContextIds(int BelongedArgumentId)
+api IntList getSnapshotList(int BelongedArgumentId)
+api Json getContext(int NodeId)
+api void Support(int EvidenceNodeId, int ProcessId)
+api void Rebuttal(int EvidenceNodeId, int ProcessId, String Diagnosis)

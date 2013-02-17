@@ -20,7 +20,7 @@ TypeMap.setString("String", "String");
 Json ConstMap = new Json();
 
 File output = stdout;
-String AppName = "MyRpc";
+String AppName = "Api";
 String AppType = "JsonRPCClient";
 
 class IDLCodeGenerator {
@@ -242,7 +242,7 @@ class KonohaCodeGen extends IDLCodeGenerator {
             emit("  Json[] param = [];");
             for (i=0; i < keys.getlength(); i = i + 1) {
                 String k = keys[i];
-                emit("  param.add(${Param.getString(k)}.toJson());");
+                emit("  param.add(${k}.toJson());");
             }
             emit("  Json request  = createMessage(\"${MethodName}\", param);");
             emit("  Json response = emitRequest(request);");
@@ -254,7 +254,15 @@ class KonohaCodeGen extends IDLCodeGenerator {
             for (i=0; i < keys.getlength(); i = i + 1) {
                 String k = keys[i];
                 String p = Param.getString(k);
-                emit("  ${k} ${p} = ConvetTo${k}(request.get(\"${p}\"));");
+                if(p=="Json") {
+                    emit("  ${p} ${k} = request.get(\"${k}\");");
+                }else if(p=="int") {
+                    emit("  ${p} ${k} = request.getInt(\"${k}\");");
+                }else if(p=="String") {
+                    emit("  ${p} ${k} = request.getString(\"${k}\");");
+                }else {
+                    emit("  ${p} ${k} = ConvertTo${p}(request.get(\"${k}\"));");
+                }
             }
             emit("  Json request = createMessage(\"FIXME\");");
             emit("  emitResponse(request);");
